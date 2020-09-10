@@ -29,6 +29,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
     var apiReulstDocument: NSArray = []
     var searchOption = SearchOption()
     
+    
     @IBOutlet var searchBar: UISearchBar!
     
     override func viewDidLoad() {
@@ -82,6 +83,11 @@ class ViewController: UIViewController, UISearchBarDelegate {
         for i in 0 ..< apiReulstDocument.count {
             print((apiReulstDocument[i] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
         }
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        
     }
 
     
@@ -97,13 +103,20 @@ extension ViewController: UICollectionViewDelegate {
 }
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        
+        if(apiReulstDocument.count != 0){
+            return searchOption.size
+        }
+        return 0
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCollectionViewCell.identifier, for: indexPath) as! MyCollectionViewCell
         
-        cell.configure(with: UIImage(named: "Image")!)
+        print(indexPath[1])
+        cell.configure(with: (apiReulstDocument[indexPath[1]] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
+        
         
         return cell;
 
