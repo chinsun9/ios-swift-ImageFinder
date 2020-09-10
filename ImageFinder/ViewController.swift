@@ -23,7 +23,19 @@ class ViewController: UIViewController, UISearchBarDelegate {
 //    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(searchBar.searchTextField.text!)
+        let query: String = searchBar.searchTextField.text!
+        print(query)
+        
+        let apiRequest = APIResquest()
+        
+        apiRequest.sendRequest(query) { responseObject, error in
+            guard let responseObject = responseObject, error == nil else {
+                print(error ?? "error")
+                return
+            }
+            
+            print(responseObject)
+        }
     }
 
     
