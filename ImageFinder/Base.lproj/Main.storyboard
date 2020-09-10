@@ -25,6 +25,9 @@
                                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="RVx-pl-ngp">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="gtc-ek-4vR"/>
+                                                </connections>
                                             </searchBar>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Nw-65-qOQ">
                                                 <rect key="frame" x="374" y="14" width="40" height="22"/>
@@ -81,6 +84,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="RVx-pl-ngp" id="2i4-Wm-ra6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
