@@ -22,7 +22,7 @@ struct APIResquest {
         
     }
     
-    func sendRequest(_ query: String, completion: @escaping ([String: Any]?, Error?) -> Void) {
+    func sendRequest(_ query: String, completion: @escaping (NSDictionary?, Error?) -> Void) {
         
         
         var url = URLComponents(string: self.resourceString)!
@@ -52,7 +52,7 @@ struct APIResquest {
                     return
             }
 
-            let responseObject = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+            let responseObject = (try? JSONSerialization.jsonObject(with: data)) as? NSDictionary
             completion(responseObject, nil)
         }
         task.resume()

@@ -35,6 +35,13 @@ class ViewController: UIViewController, UISearchBarDelegate {
             }
             
             print(responseObject)
+            print(type(of: responseObject))
+            
+            
+//            print(responseObject["meta"]!["pageable_count"]!)
+            // print(responseObject.value( forKeyPath: "meta.pageable_count" )!)
+            print(responseObject.value(forKeyPath: "meta.pageable_count")!)
+            
         }
     }
 
