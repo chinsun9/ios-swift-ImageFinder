@@ -22,15 +22,20 @@ struct APIResquest {
         
     }
     
-    func sendRequest(_ query: String, completion: @escaping (NSDictionary?, Error?) -> Void) {
+    func sendRequest(_ searchOption: SearchOption, completion: @escaping (NSDictionary?, Error?) -> Void) {
         
+        let query = searchOption.query
+        let size = String(searchOption.size)
+        let page = String(searchOption.page)
+        let sort = searchOption.sort
         
         var url = URLComponents(string: self.resourceString)!
         
         url.queryItems = [
             URLQueryItem(name: "query", value: query),
-            URLQueryItem(name: "size", value: "1"),
-            URLQueryItem(name: "page", value: "1")
+            URLQueryItem(name: "size", value: size),
+            URLQueryItem(name: "page", value: page),
+            URLQueryItem(name: "sort", value: sort)
         ]
 
         url.percentEncodedQuery = url.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
