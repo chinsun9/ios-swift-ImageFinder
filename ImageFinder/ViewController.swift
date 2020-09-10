@@ -24,6 +24,8 @@ struct SearchOption {
 
 class ViewController: UIViewController, UISearchBarDelegate {
     
+    @IBOutlet var collectionView: UICollectionView!
+    
     var apiReulstDocument: NSArray = []
     var searchOption = SearchOption()
     
@@ -31,12 +33,19 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 120, height: 120)
+        collectionView.collectionViewLayout = layout
+        
+        
+        collectionView.register(MyCollectionViewCell.nib(), forCellWithReuseIdentifier: MyCollectionViewCell.identifier)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
     }
 
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        print(searchText)
-//    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let query: String = searchBar.searchTextField.text!
@@ -78,3 +87,35 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
 }
 
+extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        print("You tapped me")
+    }
+}
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 12
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCollectionViewCell.identifier, for: indexPath) as! MyCollectionViewCell
+        
+        cell.configure(with: UIImage(named: "Image")!)
+        
+        return cell;
+
+    }
+    
+}
+
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 120)
+    }
+    
+}
