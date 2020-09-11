@@ -38,7 +38,7 @@
                                                     <color key="titleColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="moq-fI-lAP" kind="show" id="HLo-6d-hTV"/>
+                                                    <segue destination="moq-fI-lAP" kind="show" identifier="searchOption" id="HLo-6d-hTV"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -121,10 +121,10 @@
             </objects>
             <point key="canvasLocation" x="139" y="110"/>
         </scene>
-        <!--View Controller-->
+        <!--EditSearchOptionView-->
         <scene sceneID="fcY-Tp-fB8">
             <objects>
-                <viewController id="moq-fI-lAP" sceneMemberID="viewController">
+                <viewController title="EditSearchOptionView" id="moq-fI-lAP" customClass="SearchOptionViewController" customModule="ImageFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dzT-Oj-Rkw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -182,6 +182,9 @@
                                                                         <color key="value" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="switchChange:" destination="moq-fI-lAP" eventType="valueChanged" id="AEJ-SU-Ywv"/>
+                                                                </connections>
                                                             </switch>
                                                         </subviews>
                                                     </stackView>
@@ -217,6 +220,9 @@
                                                             <segment title="40"/>
                                                             <segment title="80"/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="scChange:" destination="moq-fI-lAP" eventType="valueChanged" id="K9O-St-Gpe"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                 </subviews>
                                             </stackView>
@@ -243,6 +249,9 @@
                                                         <state key="normal" title="삭제">
                                                             <color key="titleColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="btnDeleteHistory:" destination="moq-fI-lAP" eventType="touchUpInside" id="9Vr-KR-7T2"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -262,11 +271,18 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="191" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                         <state key="normal" title="취소"/>
+                                                        <connections>
+                                                            <action selector="btnCancel:" destination="33c-HY-od0" eventType="touchUpInside" id="alO-zQ-gvM"/>
+                                                            <action selector="btnCancel:" destination="moq-fI-lAP" eventType="touchUpInside" id="omf-uE-Zps"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dh-89-Nd6">
                                                         <rect key="frame" x="191" y="0.0" width="191" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                         <state key="normal" title="확인"/>
+                                                        <connections>
+                                                            <action selector="btnDone:" destination="moq-fI-lAP" eventType="touchUpInside" id="ONn-A6-yCg"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -293,8 +309,13 @@
                         <viewLayoutGuide key="safeArea" id="kFd-cX-6OO"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZXg-x5-x2Y"/>
+                    <connections>
+                        <outlet property="scSize" destination="87D-It-EEL" id="yFR-g2-A1b"/>
+                        <outlet property="switchSort" destination="qrb-bB-zIl" id="SDU-VS-7Mf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kMb-Td-lRg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="33c-HY-od0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="802.89855072463774" y="108.42391304347827"/>
         </scene>

@@ -22,7 +22,7 @@ struct SearchOption {
     }
 }
 
-class ViewController: UIViewController, UISearchBarDelegate {
+class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var searchResultHelperView: UIStackView!
@@ -50,6 +50,26 @@ class ViewController: UIViewController, UISearchBarDelegate {
         self.searchResultHelperView.constraints[0].constant = 0
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+        switch segue.identifier {
+        case "searchOption":
+            print("segue:searchOption")
+            let searchOptionViewController = segue.destination as! SearchOptionViewController
+            searchOptionViewController.searchOption = searchOption
+            searchOptionViewController.delegate = self
+        default:
+            print("no way")
+        }
+    }
+    
+    
+    // 서치옵션뷰컨트롤러랑 데이터 공유 위한 함수
+    func didSearchOptionEditDone(_ controller: SearchOptionViewController, searchOption: SearchOption) {
+        print(searchOption)
+        self.searchOption = searchOption
+    }
 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -66,7 +86,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 return
             }
             
-            print(responseObject)
+//            print(responseObject)
 //            print(type(of: responseObject))
             
 //            print(responseObject["meta"]!["pageable_count"]!)
@@ -83,13 +103,13 @@ class ViewController: UIViewController, UISearchBarDelegate {
     }
     
     func tmp() {
-
+//
         print(apiReulstDocument.count)
-        print(type(of: apiReulstDocument[0]))
+//        print(type(of: apiReulstDocument[0]))
         
-        for i in 0 ..< apiReulstDocument.count {
-            print((apiReulstDocument[i] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
-        }
+//        for i in 0 ..< apiReulstDocument.count {
+//            print((apiReulstDocument[i] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
+//        }
         
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -132,7 +152,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCollectionViewCell.identifier, for: indexPath) as! MyCollectionViewCell
         
-        print(indexPath[1])
+        
         cell.configure(with: (apiReulstDocument[indexPath[1]] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
         
         
