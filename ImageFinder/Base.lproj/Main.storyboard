@@ -52,6 +52,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-HP-imZ">
                                                 <rect key="frame" x="0.0" y="9" width="138" height="22"/>
                                                 <state key="normal" image="chevron.left" catalog="system"/>
+                                                <connections>
+                                                    <action selector="btnPreviousPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQl-ga-pE0"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 페이지" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS5-yR-vu4">
                                                 <rect key="frame" x="138" y="9.9999999999999982" width="138" height="20.333333333333329"/>
@@ -62,6 +65,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3h-Gd-sRF">
                                                 <rect key="frame" x="276" y="9" width="138" height="22"/>
                                                 <state key="normal" image="chevron.right" catalog="system"/>
+                                                <connections>
+                                                    <action selector="btnNextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zUd-oH-ckh"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -112,7 +118,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="btnNextPage" destination="Z3h-Gd-sRF" id="ODe-YX-RFr"/>
+                        <outlet property="btnPreviousPage" destination="OSZ-HP-imZ" id="25g-a1-aGm"/>
                         <outlet property="collectionView" destination="pXj-BZ-hDP" id="4ub-NG-TOB"/>
+                        <outlet property="lblCurrentPage" destination="jS5-yR-vu4" id="STT-7M-jg1"/>
                         <outlet property="searchBar" destination="RVx-pl-ngp" id="2i4-Wm-ra6"/>
                         <outlet property="searchResultHelperView" destination="DTj-tZ-sG0" id="tq0-Nc-OTo"/>
                     </connections>

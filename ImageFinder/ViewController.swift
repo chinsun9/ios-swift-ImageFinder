@@ -26,10 +26,16 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var searchResultHelperView: UIStackView!
+    @IBOutlet var btnPreviousPage: UIButton!
+    @IBOutlet var btnNextPage: UIButton!
+    @IBOutlet var lblCurrentPage: UILabel!
     
     var apiReulstDocument: NSArray = []
     var searchOption = SearchOption()
+    var isEndPage: Bool = false
     
+    // 애니메이션 용 변수
+    var isNext: Bool = false
     
     @IBOutlet var searchBar: UISearchBar!
     
@@ -77,9 +83,24 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
         
         if gesture.direction == .left {
-            print("왼쪽 스와이프")
+            print("왼쪽 스와이프 ; 다음페이지")
+            if !isEndPage {
+                isNext = true
+                searchOption.page += 1
+                search()
+            } else {
+                print("마지막 페이지")
+            }
+            
         } else if gesture.direction == .right {
-            print("오른쪽 스와이프")
+            print("오른쪽 스와이프 ; 이전페이지")
+            if searchOption.page > 1 {
+                isNext = false
+                searchOption.page -= 1
+                search()
+            } else {
+                print("첫번째 페이지")
+            }
         }
         
             // 근데 콜렉션뷰에서 스크롤하면 상하 제스처가 먹히지 않음....
@@ -180,6 +201,12 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         //            print(responseObject["meta"]!["pageable_count"]!)
                     // print(responseObject.value( forKeyPath: "meta.pageable_count" )!)
                     self.apiReulstDocument = responseObject.value(forKeyPath: "documents")! as! NSArray
+
+                    
+                    
+                    self.isEndPage = responseObject.value(forKeyPath: "meta.is_end")! as! Int == 0 ? false : true
+                 
+                    
                     
                     // 개수 가져오기
                     
@@ -191,6 +218,30 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
                     //        }
                             
                     DispatchQueue.main.async {
+                        
+                        // 현재 페이지 보여주는 라벨 갱신
+                        self.lblCurrentPage.text = String( self.searchOption.page) + " 페이지"
+                        
+
+                        // 카카오 이미지 검색 size를 1로 검색해도 50까지 밖에 검색이 안된다..
+                        if self.isEndPage || self.searchOption.page >= 50 {
+                            // 다음 페이지 버튼 비활성화
+                            self.btnNextPage.isEnabled = false
+                        } else {
+                            self.btnNextPage.isEnabled = true
+                        }
+                        
+                        if self.searchOption.page <= 1 {
+                            // 이전 페이지 버튼 비활성화
+                            self.btnPreviousPage.isEnabled = false
+                        } else {
+                            self.btnPreviousPage.isEnabled =  true
+                        }
+                        
+                        // 애니메이션 테스트
+                        // 다음 페이지
+                        self.collectionView.layer.add(self.swipeTransitionToLeftSide(self.isNext), forKey: nil)
+                        
                         self.collectionView.reloadData()
                         
                         // search result helper view extend
@@ -211,7 +262,30 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
        
         
     }
+    
+    func swipeTransitionToLeftSide(_ leftSide: Bool) -> CATransition {
+        let transition = CATransition()
+        transition.startProgress = 0.0
+        transition.endProgress = 1.0
+        transition.type = CATransitionType.push
+        transition.subtype = leftSide ? CATransitionSubtype.fromRight : CATransitionSubtype.fromLeft
+        transition.duration = 0.3
 
+        return transition
+    }
+    
+    @IBAction func btnPreviousPage(_ sender: UIButton) {
+        isNext = false
+        searchOption.page -= 1
+        search()
+    }
+    
+    @IBAction func btnNextPage(_ sender: UIButton) {
+        isNext = true
+        searchOption.page += 1
+        search()
+    }
+    
     
 }
 
