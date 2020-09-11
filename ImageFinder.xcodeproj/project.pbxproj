@@ -15,6 +15,8 @@
 		4B0A3DDE2509B7040036E959 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0A3DDC2509B7040036E959 /* LaunchScreen.storyboard */; };
 		4B5F5ED5250B11B000BCB5AF /* UISwithCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F5ED4250B11B000BCB5AF /* UISwithCustom.swift */; };
 		4B5F5ED7250B167400BCB5AF /* SearchOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F5ED6250B167400BCB5AF /* SearchOptionViewController.swift */; };
+		4B5F5EDA250B6F4200BCB5AF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5F5ED9250B6F4200BCB5AF /* WebKit.framework */; };
+		4B5F5EDC250B6F5D00BCB5AF /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F5EDB250B6F5D00BCB5AF /* DetailImageViewController.swift */; };
 		4BFA0A502509E43500F7E613 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA0A4F2509E43500F7E613 /* APIRequest.swift */; };
 		4BFA0A542509F49C00F7E613 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA0A532509F49C00F7E613 /* Secret.swift */; };
 		4BFA0A57250A11E000F7E613 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFA0A55250A11E000F7E613 /* MyCollectionViewCell.swift */; };
@@ -32,6 +34,8 @@
 		4B0A3DDF2509B7040036E959 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B5F5ED4250B11B000BCB5AF /* UISwithCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwithCustom.swift; sourceTree = "<group>"; };
 		4B5F5ED6250B167400BCB5AF /* SearchOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptionViewController.swift; sourceTree = "<group>"; };
+		4B5F5ED9250B6F4200BCB5AF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		4B5F5EDB250B6F5D00BCB5AF /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
 		4BFA0A4F2509E43500F7E613 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4BFA0A532509F49C00F7E613 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		4BFA0A55250A11E000F7E613 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B5F5EDA250B6F4200BCB5AF /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +59,7 @@
 			children = (
 				4B0A3DD02509B7020036E959 /* ImageFinder */,
 				4B0A3DCF2509B7020036E959 /* Products */,
+				4B5F5ED8250B6F4100BCB5AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +79,7 @@
 				4B0A3DD32509B7020036E959 /* SceneDelegate.swift */,
 				4B0A3DD52509B7020036E959 /* ViewController.swift */,
 				4B5F5ED6250B167400BCB5AF /* SearchOptionViewController.swift */,
+				4B5F5EDB250B6F5D00BCB5AF /* DetailImageViewController.swift */,
 				4BFA0A55250A11E000F7E613 /* MyCollectionViewCell.swift */,
 				4BFA0A56250A11E000F7E613 /* MyCollectionViewCell.xib */,
 				4BFA0A4F2509E43500F7E613 /* APIRequest.swift */,
@@ -83,6 +90,14 @@
 				4B0A3DDF2509B7040036E959 /* Info.plist */,
 			);
 			path = ImageFinder;
+			sourceTree = "<group>";
+		};
+		4B5F5ED8250B6F4100BCB5AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4B5F5ED9250B6F4200BCB5AF /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +175,7 @@
 				4B5F5ED5250B11B000BCB5AF /* UISwithCustom.swift in Sources */,
 				4B0A3DD62509B7020036E959 /* ViewController.swift in Sources */,
 				4B5F5ED7250B167400BCB5AF /* SearchOptionViewController.swift in Sources */,
+				4B5F5EDC250B6F5D00BCB5AF /* DetailImageViewController.swift in Sources */,
 				4BFA0A542509F49C00F7E613 /* Secret.swift in Sources */,
 				4BFA0A57250A11E000F7E613 /* MyCollectionViewCell.swift in Sources */,
 				4B0A3DD22509B7020036E959 /* AppDelegate.swift in Sources */,

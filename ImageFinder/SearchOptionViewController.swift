@@ -100,8 +100,9 @@ class SearchOptionViewController: UIViewController {
     /////////////////////////////////////////////
     
     @IBAction func btnCancel(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
         
+        _ = navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnDone(_ sender: UIButton) {
@@ -111,6 +112,7 @@ class SearchOptionViewController: UIViewController {
         }
         saveSearchOption()
         
-         dismiss(animated: true, completion: nil)
+//         dismiss(animated: true, completion: nil)
+        _ = navigationController?.popViewController(animated: true)
     }
 }

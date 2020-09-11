@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rxs-Iz-fkE">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ltr-KU-wKt">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uli-aO-gqb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -75,7 +75,7 @@
                                         </constraints>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pXj-BZ-hDP">
-                                        <rect key="frame" x="0.0" y="90" width="414" height="646"/>
+                                        <rect key="frame" x="0.0" y="90" width="414" height="602"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bwf-uc-j6v">
                                             <size key="itemSize" width="128" height="128"/>
@@ -84,13 +84,16 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Fatal error: Unexpectedly found nil while unwrapping an Optional value: file" id="rI6-zG-vXk">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="rI6-zG-vXk">
                                                 <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QcC-fR-ioa">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </collectionViewCellContentView>
+                                                <connections>
+                                                    <segue destination="xP1-1I-7yD" kind="show" identifier="detailImage" id="2yV-gQ-B10"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
@@ -117,29 +120,78 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="kje-Tv-czZ"/>
                     <connections>
                         <outlet property="btnNextPage" destination="Z3h-Gd-sRF" id="ODe-YX-RFr"/>
                         <outlet property="btnPreviousPage" destination="OSZ-HP-imZ" id="25g-a1-aGm"/>
                         <outlet property="collectionView" destination="pXj-BZ-hDP" id="4ub-NG-TOB"/>
                         <outlet property="lblCurrentPage" destination="jS5-yR-vu4" id="STT-7M-jg1"/>
-                        <outlet property="searchBar" destination="RVx-pl-ngp" id="2i4-Wm-ra6"/>
+                        <outlet property="searchBar" destination="uli-aO-gqb" id="qJ4-x0-XdP"/>
                         <outlet property="searchResultHelperView" destination="DTj-tZ-sG0" id="tq0-Nc-OTo"/>
+                        <outlet property="svSearchBar" destination="uli-aO-gqb" id="hdO-lx-A08"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="110"/>
+            <point key="canvasLocation" x="71" y="108"/>
+        </scene>
+        <!--Detail Image View Controller-->
+        <scene sceneID="yKS-mL-i5F">
+            <objects>
+                <viewController id="xP1-1I-7yD" customClass="DetailImageViewController" customModule="ImageFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wcC-2y-awe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Igf-Wg-dQP">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P52-eU-sKd">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="400" id="fQR-dW-uAJ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xg-nF-9Et">
+                                        <rect key="frame" x="0.0" y="400" width="414" height="336"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <wkWebViewConfiguration key="configuration">
+                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                            <wkPreferences key="preferences"/>
+                                        </wkWebViewConfiguration>
+                                    </wkWebView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Igf-Wg-dQP" firstAttribute="top" secondItem="wcC-2y-awe" secondAttribute="top" id="Fwn-qi-CS4"/>
+                            <constraint firstItem="YdP-OV-efz" firstAttribute="bottom" secondItem="Igf-Wg-dQP" secondAttribute="bottom" id="nZT-lh-E5L"/>
+                            <constraint firstItem="YdP-OV-efz" firstAttribute="trailing" secondItem="Igf-Wg-dQP" secondAttribute="trailing" id="okL-CX-3Ii"/>
+                            <constraint firstItem="Igf-Wg-dQP" firstAttribute="leading" secondItem="YdP-OV-efz" secondAttribute="leading" id="xwd-40-LMW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YdP-OV-efz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9sc-9f-XBM"/>
+                    <connections>
+                        <outlet property="imageView" destination="P52-eU-sKd" id="arm-VG-jW6"/>
+                        <outlet property="myWebView" destination="1xg-nF-9Et" id="2Ox-KK-Hr3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qFd-Y5-Enr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="474" y="854"/>
         </scene>
         <!--EditSearchOptionView-->
         <scene sceneID="fcY-Tp-fB8">
             <objects>
                 <viewController title="EditSearchOptionView" id="moq-fI-lAP" customClass="SearchOptionViewController" customModule="ImageFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dzT-Oj-Rkw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="dzP-2e-EXk">
-                                <rect key="frame" x="16" y="0.0" width="382" height="500"/>
+                                <rect key="frame" x="16" y="44" width="382" height="500"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAt-Mb-UDw" userLabel="여백">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="20"/>
@@ -326,7 +378,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kMb-Td-lRg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="33c-HY-od0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="802.89855072463774" y="108.42391304347827"/>
+            <point key="canvasLocation" x="-358" y="854"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sCA-hc-HTx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rxs-Iz-fkE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eKw-E4-Rtj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="TOO-qy-8AU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="72z-Ga-Y2N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-912" y="109"/>
         </scene>
     </scenes>
     <resources>
