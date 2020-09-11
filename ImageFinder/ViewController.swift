@@ -15,7 +15,7 @@ struct SearchOption {
     var query: String
     
     init() {
-        size = 10
+        size = 20
         sort = "accuracy"
         page = 1
         query = ""
@@ -25,6 +25,7 @@ struct SearchOption {
 class ViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var searchResultHelperView: UIStackView!
     
     var apiReulstDocument: NSArray = []
     var searchOption = SearchOption()
@@ -44,6 +45,9 @@ class ViewController: UIViewController, UISearchBarDelegate {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        // 검색 결과 화면에 보이는 뷰 처음에 숨기기
+        self.searchResultHelperView.constraints[0].constant = 0
         
     }
 
@@ -72,6 +76,9 @@ class ViewController: UIViewController, UISearchBarDelegate {
             // 개수 가져오기
             
             self.tmp()
+            
+            
+           
         }
     }
     
@@ -86,6 +93,17 @@ class ViewController: UIViewController, UISearchBarDelegate {
         
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            
+            // search result helper view extend
+            self.searchResultHelperView.layoutIfNeeded() // force any pending operations to finish
+
+            print(self.searchResultHelperView.constraints[0])
+            UIView.animate(withDuration: 0.4, animations: { () -> Void in
+               
+                self.searchResultHelperView.constraints[0].constant = 40
+                
+               self.searchResultHelperView.layoutIfNeeded()
+            })
         }
         
     }

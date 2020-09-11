@@ -43,8 +43,30 @@
                                             <constraint firstAttribute="height" constant="50" id="bCM-gS-OR5"/>
                                         </constraints>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DTj-tZ-sG0" userLabel="검색결과">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-HP-imZ">
+                                                <rect key="frame" x="0.0" y="9" width="138" height="22"/>
+                                                <state key="normal" image="chevron.left" catalog="system"/>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 페이지" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS5-yR-vu4">
+                                                <rect key="frame" x="138" y="9.9999999999999982" width="138" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3h-Gd-sRF">
+                                                <rect key="frame" x="276" y="9" width="138" height="22"/>
+                                                <state key="normal" image="chevron.right" catalog="system"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="dIy-RZ-ASd"/>
+                                        </constraints>
+                                    </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pXj-BZ-hDP">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="686"/>
+                                        <rect key="frame" x="0.0" y="90" width="414" height="646"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bwf-uc-j6v">
                                             <size key="itemSize" width="128" height="128"/>
@@ -65,12 +87,14 @@
                                     </collectionView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="pXj-BZ-hDP" firstAttribute="top" secondItem="uli-aO-gqb" secondAttribute="bottom" id="Em0-md-5pB"/>
+                                    <constraint firstAttribute="trailing" secondItem="DTj-tZ-sG0" secondAttribute="trailing" id="5L3-Bw-kH5"/>
+                                    <constraint firstItem="pXj-BZ-hDP" firstAttribute="top" secondItem="DTj-tZ-sG0" secondAttribute="bottom" id="Em0-md-5pB"/>
                                     <constraint firstAttribute="trailing" secondItem="pXj-BZ-hDP" secondAttribute="trailing" id="Ffz-KF-E8M"/>
                                     <constraint firstItem="pXj-BZ-hDP" firstAttribute="leading" secondItem="Ltr-KU-wKt" secondAttribute="leading" id="Tpk-Rp-Jab"/>
                                     <constraint firstAttribute="trailing" secondItem="uli-aO-gqb" secondAttribute="trailing" id="cOe-k1-rPF"/>
                                     <constraint firstItem="uli-aO-gqb" firstAttribute="leading" secondItem="Ltr-KU-wKt" secondAttribute="leading" id="gZc-ag-dSH"/>
                                     <constraint firstItem="uli-aO-gqb" firstAttribute="top" secondItem="Ltr-KU-wKt" secondAttribute="top" id="h2J-Sd-ozN"/>
+                                    <constraint firstItem="DTj-tZ-sG0" firstAttribute="leading" secondItem="Ltr-KU-wKt" secondAttribute="leading" id="ovt-WH-t6c"/>
                                     <constraint firstAttribute="bottom" secondItem="pXj-BZ-hDP" secondAttribute="bottom" id="vlo-yi-Kwr"/>
                                 </constraints>
                             </stackView>
@@ -87,6 +111,7 @@
                     <connections>
                         <outlet property="collectionView" destination="pXj-BZ-hDP" id="4ub-NG-TOB"/>
                         <outlet property="searchBar" destination="RVx-pl-ngp" id="2i4-Wm-ra6"/>
+                        <outlet property="searchResultHelperView" destination="DTj-tZ-sG0" id="tq0-Nc-OTo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -95,6 +120,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="staroflife" catalog="system" width="124" height="128"/>
     </resources>
 </document>
