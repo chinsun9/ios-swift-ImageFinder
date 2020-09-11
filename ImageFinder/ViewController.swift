@@ -49,6 +49,61 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         // 검색 결과 화면에 보이는 뷰 처음에 숨기기
         self.searchResultHelperView.constraints[0].constant = 0
         
+        
+        
+        // 스와이프 제스처
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+//        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+//        swipeDown.direction = .down
+//        self.view.addGestureRecognizer(swipeDown)
+//
+//        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+//        swipeUp.direction = .up
+//        self.view.addGestureRecognizer(swipeUp)
+        
+        
+        // 리프레쉬 컨트롤
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
+        
+        if gesture.direction == .left {
+            print("왼쪽 스와이프")
+        } else if gesture.direction == .right {
+            print("오른쪽 스와이프")
+        }
+        
+            // 근데 콜렉션뷰에서 스크롤하면 상하 제스처가 먹히지 않음....
+//        else if gesture.direction == .down {
+//            print("아래쪽 스와이프 ; 새로고침")
+//            // 최상단일 경우에만 새로고침
+//            if collectionView.contentOffset.y <= 10 {
+//                print("새로고침")
+//            }
+//        } else if gesture.direction == .up {
+//            print("위쪽 스와이프")
+//        }
+    }
+    
+    @objc func handleRefreshControl() {
+       // Update your content…
+        print("새로고침")
+        search()
+
+       // Dismiss the refresh control.
+       DispatchQueue.main.async {
+          self.collectionView.refreshControl?.endRefreshing()
+        
+       }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,6 +119,33 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         }
     }
     
+    // 컬렉션뷰 상하 제스처
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print(scrollView.contentOffset.y)
+        if scrollView.contentOffset.y >= 30 {
+            self.searchResultHelperView.constraints[0].constant = 0
+        } else {
+            self.searchResultHelperView.constraints[0].constant = 40
+        }
+        
+        // 새로고침 기능 -> 리프레쉬 컨트롤 이용...
+//        if scrollView.contentOffset.y <= -150 {
+//            print("새로고침")
+//            scrollView.contentInsetAdjustmentBehavior = .never
+//            scrollView.contentOffset.y = 0
+//
+//            DispatchQueue.main.async {
+//                UIView.animate(withDuration: 1.0, animations: {
+//                scrollView.contentOffset.y = 0
+//                }, completion: nil)
+//            }
+//
+//            search()
+//            //scrollView.contentInsetAdjustmentBehavior = .always
+//        }
+    }
+    
+        
     
     // 서치옵션뷰컨트롤러랑 데이터 공유 위한 함수
     func didSearchOptionEditDone(_ controller: SearchOptionViewController, searchOption: SearchOption) {
@@ -78,53 +160,55 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         
         searchOption.query = query
         
-        let apiRequest = APIResquest()
-        
-        apiRequest.sendRequest(searchOption) { responseObject, error in
-            guard let responseObject = responseObject, error == nil else {
-                print(error ?? "error")
-                return
-            }
-            
-//            print(responseObject)
-//            print(type(of: responseObject))
-            
-//            print(responseObject["meta"]!["pageable_count"]!)
-            // print(responseObject.value( forKeyPath: "meta.pageable_count" )!)
-            self.apiReulstDocument = responseObject.value(forKeyPath: "documents")! as! NSArray
-            
-            // 개수 가져오기
-            
-            self.tmp()
-            
-            
-           
-        }
+        search()
     }
     
-    func tmp() {
+    func search() {
 //
-        print(apiReulstDocument.count)
-//        print(type(of: apiReulstDocument[0]))
         
-//        for i in 0 ..< apiReulstDocument.count {
-//            print((apiReulstDocument[i] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
-//        }
-        
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-            
-            // search result helper view extend
-            self.searchResultHelperView.layoutIfNeeded() // force any pending operations to finish
-
-            print(self.searchResultHelperView.constraints[0])
-            UIView.animate(withDuration: 0.4, animations: { () -> Void in
-               
-                self.searchResultHelperView.constraints[0].constant = 40
+        let apiRequest = APIResquest()
                 
-               self.searchResultHelperView.layoutIfNeeded()
-            })
-        }
+                apiRequest.sendRequest(searchOption) { responseObject, error in
+                    guard let responseObject = responseObject, error == nil else {
+                        print(error ?? "error")
+                        return
+                    }
+                    
+        //            print(responseObject)
+        //            print(type(of: responseObject))
+                    
+        //            print(responseObject["meta"]!["pageable_count"]!)
+                    // print(responseObject.value( forKeyPath: "meta.pageable_count" )!)
+                    self.apiReulstDocument = responseObject.value(forKeyPath: "documents")! as! NSArray
+                    
+                    // 개수 가져오기
+                    
+                    print(self.apiReulstDocument.count)
+                    //        print(type(of: apiReulstDocument[0]))
+                            
+                    //        for i in 0 ..< apiReulstDocument.count {
+                    //            print((apiReulstDocument[i] as! NSDictionary).value(forKey: "thumbnail_url") as! String)
+                    //        }
+                            
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                        
+                        // search result helper view extend
+                        self.searchResultHelperView.layoutIfNeeded() // force any pending operations to finish
+
+                        print(self.searchResultHelperView.constraints[0])
+                        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+                           
+                            self.searchResultHelperView.constraints[0].constant = 40
+                            
+                           self.searchResultHelperView.layoutIfNeeded()
+                        })
+                        
+
+                        
+                    }
+                }
+       
         
     }
 
