@@ -37,6 +37,8 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     var searchOption = SearchOption()
     var isEndPage: Bool = false
     var isHideSearchHelperView: Bool = false
+    var isNoSearch: Bool = false
+    
     
     // 애니메이션 용 변수
     var isNext: Bool = false
@@ -80,8 +82,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         
         
         // 리프레쉬 컨트롤
-        collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        
         
         // 네비게이션바 숨기기
         //        viewWillDisappea(true)
@@ -126,6 +127,8 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     
     @objc func handleRefreshControl() {
         // Update your content…
+        
+        
         print("새로고침")
         search()
         
@@ -294,6 +297,12 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
                     
                     self.searchResultHelperView.layoutIfNeeded()
                 })
+                
+                if !self.isNoSearch {
+                    self.isNoSearch.toggle()
+                    self.collectionView.refreshControl = UIRefreshControl()
+                    self.collectionView.refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
+                }
             }
         }
     }
