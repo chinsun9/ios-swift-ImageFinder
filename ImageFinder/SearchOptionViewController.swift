@@ -64,8 +64,8 @@ class SearchOptionViewController: UIViewController {
     
     func saveSearchOption(){
         print("saveSearchOption")
-        UserDefaults.standard.set(searchOption.sort, forKey: Setting.State.sort.rawValue)
-        UserDefaults.standard.set(searchOption.size, forKey: Setting.State.size.rawValue)
+        UserDefaults.standard.set(searchOption.sort, forKey: Setting.Option.sort.rawValue)
+        UserDefaults.standard.set(searchOption.size, forKey: Setting.Option.size.rawValue)
         
     }
     
@@ -98,6 +98,25 @@ class SearchOptionViewController: UIViewController {
     
     @IBAction func btnDeleteHistory(_ sender: UIButton) {
         print("delete history")
+        
+        let alert = UIAlertController(title: "검색 기록 삭제", message: "확인을 누르면 검색 기록이 바로 삭제됩니다.", preferredStyle: UIAlertController.Style.alert)
+        
+        let okAction = UIAlertAction(title: "확인", style: .default, handler : {
+            ACTION in
+            UserDefaults.standard.set([], forKey: "History")
+            self.showToast(message: "삭제되었습니다.", font: .systemFont(ofSize: 12.0))
+        } )
+        let cancel = UIAlertAction(title: "cancel", style: .destructive, handler : nil)
+        
+        
+        alert.addAction(cancel)
+        alert.addAction(okAction)
+        
+        
+        
+        present(alert, animated: true, completion: nil)
+   
+        
     }
     /////////////////////////////////////////////
     

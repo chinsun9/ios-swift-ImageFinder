@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DropDown
 
 struct SearchOption {
     var size: Int
@@ -25,7 +26,6 @@ struct SearchOption {
 class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDelegate {
   
     
-    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var searchResultHelperView: UIStackView!
     @IBOutlet var btnPreviousPage: UIButton!
@@ -43,6 +43,10 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     
     // 애니메이션 용 변수
     var isNext: Bool = false
+    
+    // 검색기록용 변수
+    let searchHistoryDropDown = DropDown()
+    var searchHistory = [String]()
     
     @IBOutlet var searchBar: UISearchBar!
     
@@ -90,8 +94,12 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         viewWillAppear(false)
         
         // 검색옵션 불러오기
-        loadSearchOption()
+        loadSearchData()
+        // 검색창 드랍다운 설정
         
+        searchHistoryDropDown.anchorView = searchBar
+        searchHistoryDropDown.dataSource = searchHistory
+        searchHistoryDropDown.cellConfiguration = { (index, item) in return "\(item)" }
     }
     
     @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
@@ -214,12 +222,18 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         })
     }
     
-    
+
     
     // 서치옵션뷰컨트롤러랑 데이터 공유 위한 함수
     func didSearchOptionEditDone(_ controller: SearchOptionViewController, searchOption: SearchOption) {
         print(searchOption)
         self.searchOption = searchOption
+        
+        
+        if let searchHistory = UserDefaults.standard.value(forKey: "History") {
+            self.searchHistory = searchHistory as! [String]
+            print(searchHistory)
+        }
     }
     
     
@@ -230,6 +244,33 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         searchOption.query = query
         
         search()
+    }
+  
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+      searchHistoryDropDown.selectionAction = {
+           (index: Int, item: String) in
+           print("Selected item: \(item) at index: \(index)")
+       // 공유, 정보, 다운로드
+           
+      
+       searchBar.text = item
+       }
+        searchHistoryDropDown.width = searchBar.frame.width-30
+        searchHistoryDropDown.bottomOffset = CGPoint(x: 30, y:(searchHistoryDropDown.anchorView?.plainView.bounds.height)!)
+        searchHistoryDropDown.show()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+         
+        // 현재 타이핑한 문자열을 포함하는 리스트로 갱신
+        searchHistoryDropDown.dataSource = searchHistory.filter{ string in
+            return string.localizedCaseInsensitiveContains(searchBar.text!) }
+        
+        
+//         searchHistoryDropDown.width = searchBar.frame.width-30
+         searchHistoryDropDown.bottomOffset = CGPoint(x: 30, y:(searchHistoryDropDown.anchorView?.plainView.bounds.height)!)
+         searchHistoryDropDown.show()
     }
     
     func search() {
@@ -321,6 +362,9 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
                     self.collectionView.refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
                 }
             }
+            
+            // 검색기록
+            self.recordSearchKeyword()
         }
     }
     
@@ -404,23 +448,44 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 
 struct Setting{
-  enum State:String{
+  enum Option:String{
     case sort
     case size
   }
+    
 }
 
+
+// 검색옵션, 검색기록 관련 함수
 extension ViewController {
-  func loadSearchOption(){
+  func loadSearchData(){
     print("loadSearchOption")
     let userDefaults = UserDefaults.standard
     
-    if let sort = userDefaults.value(forKey: Setting.State.sort.rawValue),
-        let size = userDefaults.value(forKey: Setting.State.size.rawValue) {
+    if let sort = userDefaults.value(forKey: Setting.Option.sort.rawValue),
+        let size = userDefaults.value(forKey: Setting.Option.size.rawValue) {
         self.searchOption.sort = sort as! String
         self.searchOption.size = size as! Int
-           print("로드완료")
+        print(self.searchOption)
     }
+    
+    if let searchHistory = userDefaults.value(forKey: "History") {
+        self.searchHistory = searchHistory as! [String]
+        print(searchHistory)
+    }
+    
+    
+    
+    
   }
+    
+    func recordSearchKeyword() {
+        if !searchHistory.contains(searchOption.query){
+            print("새로운 키워드 추가")
+            searchHistory.append(searchOption.query)
+            UserDefaults.standard.set(searchHistory, forKey: "History")
+            
+        }
+    }
 }
 
