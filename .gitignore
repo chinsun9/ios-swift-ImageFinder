@@ -98,3 +98,4 @@ ImageFinder/Secret.swift
 
 # 코코아 패드
 Pods
+.DS_Store
