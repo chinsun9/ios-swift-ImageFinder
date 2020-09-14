@@ -36,6 +36,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     var apiReulstDocument: NSArray = []
     var searchOption = SearchOption()
     var isEndPage: Bool = false
+    var isHideSearchHelperView: Bool = false
     
     // 애니메이션 용 변수
     var isNext: Bool = false
@@ -170,10 +171,12 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     // 컬렉션뷰 상하 제스처
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //        print(scrollView.contentOffset.y)
-        if scrollView.contentOffset.y >= 30 {
-            self.searchResultHelperView.constraints[0].constant = 0
-        } else {
-            self.searchResultHelperView.constraints[0].constant = 40
+        if !isHideSearchHelperView && scrollView.contentOffset.y >= 30 {
+            isHideSearchHelperView.toggle()
+            hideSearchHelperView(isHideSearchHelperView)
+        } else if isHideSearchHelperView && scrollView.contentOffset.y < 30 {
+            isHideSearchHelperView.toggle()
+            hideSearchHelperView(isHideSearchHelperView)
         }
         
         // 새로고침 기능 -> 리프레쉬 컨트롤 이용...
@@ -191,6 +194,16 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         //            search()
         //            //scrollView.contentInsetAdjustmentBehavior = .always
         //        }
+    }
+    
+    func hideSearchHelperView(_ isHide: Bool) {
+        self.searchResultHelperView.layoutIfNeeded() // force any pending operations to finish
+
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            let height: CGFloat = isHide ? 0 : 40
+            self.searchResultHelperView.constraints[0].constant = height
+            self.view.layoutIfNeeded()
+        })
     }
     
     
