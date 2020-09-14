@@ -19,8 +19,13 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
     var isHideImage: Bool = false
     
      let rightBarDropDown = DropDown()
-   
     
+    
+    // 사진 정보 팝업용 뷰
+    var popUpWindow: PopUpWindow!
+    
+    
+       
     @IBOutlet var myWebView: WKWebView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var btnBar: UIBarButtonItem!
@@ -44,6 +49,8 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
         rightBarDropDown.anchorView = btnBar
         rightBarDropDown.dataSource = ["공유", "정보", "다운로드"]
         rightBarDropDown.cellConfiguration = { (index, item) in return "\(item)" }
+        
+        
     
     }
     
@@ -95,6 +102,7 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
         let myRequest = URLRequest(url:myUrl!)
         myWebView.load(myRequest)
     }
+  
     
     @IBAction func showBarButtonDropDown(_ sender: UIBarButtonItem) {rightBarDropDown.selectionAction = {
             (index: Int, item: String) in
@@ -105,7 +113,27 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
             
             break
         case 1:
+            var text = "범주 : "
+            text += self.document.value(forKeyPath: "collection") as! String
+            text += "\n"
             
+            text += "개시된 사이트 : "
+            text += self.document.value(forKeyPath: "display_sitename") as! String
+            text += "\n"
+            
+            text += "개시된 날짜 : "
+            text += self.document.value(forKeyPath: "datetime") as! String
+            text += "\n"
+            
+            
+            text += "사진크기 : "
+            text += (self.document.value(forKeyPath: "width") as! NSNumber).stringValue
+            text += "x"
+            text += (self.document.value(forKeyPath: "height") as! NSNumber).stringValue
+               
+            
+            self.popUpWindow = PopUpWindow(title: "이미지 정보", text: text, buttontext: "닫기")
+            self.present(self.popUpWindow, animated: true, completion: nil)
             break
         case 2:
             

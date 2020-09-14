@@ -14,6 +14,7 @@
 		4B0A3DD92509B7020036E959 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0A3DD72509B7020036E959 /* Main.storyboard */; };
 		4B0A3DDB2509B7040036E959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B0A3DDA2509B7040036E959 /* Assets.xcassets */; };
 		4B0A3DDE2509B7040036E959 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0A3DDC2509B7040036E959 /* LaunchScreen.storyboard */; };
+		4B2E1212250F0E5F004B4D46 /* PopUpWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E1211250F0E5F004B4D46 /* PopUpWindow.swift */; };
 		4B5F5ED5250B11B000BCB5AF /* UISwithCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F5ED4250B11B000BCB5AF /* UISwithCustom.swift */; };
 		4B5F5ED7250B167400BCB5AF /* SearchOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F5ED6250B167400BCB5AF /* SearchOptionViewController.swift */; };
 		4B5F5EDA250B6F4200BCB5AF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5F5ED9250B6F4200BCB5AF /* WebKit.framework */; };
@@ -35,6 +36,7 @@
 		4B0A3DDD2509B7040036E959 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B0A3DDF2509B7040036E959 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B2E120D250F036C004B4D46 /* DropDown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B2E1211250F0E5F004B4D46 /* PopUpWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpWindow.swift; sourceTree = "<group>"; };
 		4B5F5ED4250B11B000BCB5AF /* UISwithCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwithCustom.swift; sourceTree = "<group>"; };
 		4B5F5ED6250B167400BCB5AF /* SearchOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptionViewController.swift; sourceTree = "<group>"; };
 		4B5F5ED9250B6F4200BCB5AF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -87,6 +89,7 @@
 				4B0A3DD52509B7020036E959 /* ViewController.swift */,
 				4B5F5ED6250B167400BCB5AF /* SearchOptionViewController.swift */,
 				4B5F5EDB250B6F5D00BCB5AF /* DetailImageViewController.swift */,
+				4B2E1211250F0E5F004B4D46 /* PopUpWindow.swift */,
 				4BFA0A55250A11E000F7E613 /* MyCollectionViewCell.swift */,
 				4BFA0A56250A11E000F7E613 /* MyCollectionViewCell.xib */,
 				4BFA0A4F2509E43500F7E613 /* APIRequest.swift */,
@@ -238,6 +241,7 @@
 				4B0A3DD62509B7020036E959 /* ViewController.swift in Sources */,
 				4B5F5ED7250B167400BCB5AF /* SearchOptionViewController.swift in Sources */,
 				4B5F5EDC250B6F5D00BCB5AF /* DetailImageViewController.swift in Sources */,
+				4B2E1212250F0E5F004B4D46 /* PopUpWindow.swift in Sources */,
 				4BFA0A542509F49C00F7E613 /* Secret.swift in Sources */,
 				4BFA0A57250A11E000F7E613 /* MyCollectionViewCell.swift in Sources */,
 				4B0A3DD22509B7020036E959 /* AppDelegate.swift in Sources */,
