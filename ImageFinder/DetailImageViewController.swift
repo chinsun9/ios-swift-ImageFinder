@@ -110,6 +110,9 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
         // 공유, 정보, 다운로드
         switch index {
         case 0:
+            let activityController = UIActivityViewController(activityItems: [self.document.value(forKeyPath: "image_url") as Any], applicationActivities: nil)
+            
+            self.present(activityController, animated: true, completion: nil)
             
             break
         case 1:
