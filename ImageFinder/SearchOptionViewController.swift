@@ -64,6 +64,8 @@ class SearchOptionViewController: UIViewController {
     
     func saveSearchOption(){
         print("saveSearchOption")
+        UserDefaults.standard.set(searchOption.sort, forKey: Setting.State.sort.rawValue)
+        UserDefaults.standard.set(searchOption.size, forKey: Setting.State.size.rawValue)
         
     }
     

@@ -89,6 +89,9 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         //        viewWillDisappea(true)
         viewWillAppear(false)
         
+        // 검색옵션 불러오기
+        loadSearchOption()
+        
     }
     
     @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
@@ -398,3 +401,26 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+
+struct Setting{
+  enum State:String{
+    case sort
+    case size
+  }
+}
+
+extension ViewController {
+  func loadSearchOption(){
+    print("loadSearchOption")
+    let userDefaults = UserDefaults.standard
+    
+    if let sort = userDefaults.value(forKey: Setting.State.sort.rawValue),
+        let size = userDefaults.value(forKey: Setting.State.size.rawValue) {
+        self.searchOption.sort = sort as! String
+        self.searchOption.size = size as! Int
+           print("로드완료")
+    }
+  }
+}
+
