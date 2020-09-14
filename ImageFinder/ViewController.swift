@@ -38,6 +38,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     var isEndPage: Bool = false
     var isHideSearchHelperView: Bool = false
     var isNoSearch: Bool = false
+    var isRefesh: Bool = false
     
     
     // 애니메이션 용 변수
@@ -130,6 +131,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         
         
         print("새로고침")
+        isRefesh = true
         search()
         
         // Dismiss the refresh control.
@@ -281,9 +283,21 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
                     self.btnPreviousPage.isEnabled =  true
                 }
                 
-                // 애니메이션 테스트
-                // 다음 페이지
-                self.collectionView.layer.add(self.swipeTransitionToLeftSide(self.isNext), forKey: nil)
+                
+                // 페이지 로드 애니메이션
+                var side: CATransitionSubtype = CATransitionSubtype.fromRight
+                if self.isRefesh {
+                    self.isRefesh.toggle()
+                    side = CATransitionSubtype.fromBottom
+                    
+                } else if self.isNext {
+                    side = CATransitionSubtype.fromRight
+                } else {
+                    side = CATransitionSubtype.fromLeft
+                }
+                
+                self.collectionView.layer.add(self.swipeTransitionToLeftSide(side), forKey: nil)
+                
                 
                 self.collectionView.reloadData()
                 
@@ -311,12 +325,12 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         return 1
     }
     
-    func swipeTransitionToLeftSide(_ leftSide: Bool) -> CATransition {
+    func swipeTransitionToLeftSide(_ side: CATransitionSubtype) -> CATransition {
         let transition = CATransition()
         transition.startProgress = 0.0
         transition.endProgress = 1.0
         transition.type = CATransitionType.push
-        transition.subtype = leftSide ? CATransitionSubtype.fromRight : CATransitionSubtype.fromLeft
+        transition.subtype = side
         transition.duration = 0.3
         
         return transition
