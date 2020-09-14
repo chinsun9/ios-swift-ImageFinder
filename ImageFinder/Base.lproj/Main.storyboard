@@ -172,8 +172,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YdP-OV-efz"/>
                     </view>
-                    <navigationItem key="navigationItem" id="9sc-9f-XBM"/>
+                    <navigationItem key="navigationItem" id="9sc-9f-XBM">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="info.circle" catalog="system" id="7Xf-tg-Q6n">
+                            <connections>
+                                <action selector="showBarButtonDropDown:" destination="xP1-1I-7yD" id="XYM-pM-2S1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="btnBar" destination="7Xf-tg-Q6n" id="RbY-mU-XAF"/>
                         <outlet property="imageView" destination="P52-eU-sKd" id="arm-VG-jW6"/>
                         <outlet property="myWebView" destination="1xg-nF-9Et" id="2Ox-KK-Hr3"/>
                     </connections>
@@ -402,6 +409,7 @@
     <resources>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="staroflife" catalog="system" width="124" height="128"/>
     </resources>
 </document>

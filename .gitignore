@@ -89,4 +89,12 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+### Objective-C ###
+# OS X
+.DS_Store
+
+# 카카오 rest api 토큰
 ImageFinder/Secret.swift
+
+# 코코아 패드
+Pods

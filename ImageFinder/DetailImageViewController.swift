@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import DropDown
 
 
 class DetailImageViewController: UIViewController, UIScrollViewDelegate {
@@ -16,10 +17,13 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
     var url: String = ""
     var imageUrl: String = ""
     var isHideImage: Bool = false
+    
+     let rightBarDropDown = DropDown()
    
     
     @IBOutlet var myWebView: WKWebView!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var btnBar: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +39,19 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
         // 페이지 로드
         setWeb()
         
-//        loadWebPateT##url: String##Strin)
+        // 바버튼 기능
+
+        rightBarDropDown.anchorView = btnBar
+        rightBarDropDown.dataSource = ["공유", "정보", "다운로드"]
+        rightBarDropDown.cellConfiguration = { (index, item) in return "\(item)" }
+    
     }
     
         override func viewWillDisappear(_ animated: Bool) {
                super.viewWillDisappear(animated)
                navigationController?.setNavigationBarHidden(false, animated: animated)
            }
+    
     
     
     func setImage() {
@@ -84,5 +94,30 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
         let myUrl = URL(string: url)
         let myRequest = URLRequest(url:myUrl!)
         myWebView.load(myRequest)
+    }
+    
+    @IBAction func showBarButtonDropDown(_ sender: UIBarButtonItem) {rightBarDropDown.selectionAction = {
+            (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+        // 공유, 정보, 다운로드
+        switch index {
+        case 0:
+            
+            break
+        case 1:
+            
+            break
+        case 2:
+            
+            break
+        default:
+            print("no way")
+        }
+            
+        }
+        
+        rightBarDropDown.width = 140
+        rightBarDropDown.bottomOffset = CGPoint(x: 0, y:(rightBarDropDown.anchorView?.plainView.bounds.height)!)
+        rightBarDropDown.show()
     }
 }
