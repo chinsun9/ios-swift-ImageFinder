@@ -45,7 +45,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     var isEndPage: Bool = false
     var isHideSearchHelperView: Bool = false
     var isNoSearch: Bool = false
-    var isRefesh: Bool = false
+    var isRefresh: Bool = false
     
     
     // 애니메이션 용 변수
@@ -206,7 +206,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         
         
         print("새로고침")
-        isRefesh = true
+        isRefresh = true
         search()
         
         // Dismiss the refresh control.
@@ -413,8 +413,8 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
                 
                 // 페이지 로드 애니메이션
                 var side: CATransitionSubtype = CATransitionSubtype.fromRight
-                if self.isRefesh {
-                    self.isRefesh.toggle()
+                if self.isRefresh {
+                    self.isRefresh.toggle()
                     side = CATransitionSubtype.fromBottom
                     
                 } else if self.isNext {
@@ -452,7 +452,7 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     }
     
 //    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        
+//
 //        if(apiReulstDocument.count != 0){
 //            return searchOption.size
 //        }
