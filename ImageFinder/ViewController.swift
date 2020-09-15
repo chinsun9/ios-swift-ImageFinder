@@ -451,9 +451,13 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         }
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        
+//        if(apiReulstDocument.count != 0){
+//            return searchOption.size
+//        }
+//        return 0
+//    }
     
     func swipeTransitionToLeftSide(_ side: CATransitionSubtype) -> CATransition {
         let transition = CATransition()
