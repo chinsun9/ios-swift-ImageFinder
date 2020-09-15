@@ -24,9 +24,8 @@
 - 정확도순/최신순
 - 검색 개수
 
-### 검색 기록 기능
-
 <br><br><br>
+### 검색 기록 기능
 
 <img src="readmeRes/검색 기록 기능.gif" width="40%">
 
@@ -34,6 +33,7 @@
 - 필터
 - 검색 기록 삭제
 
+<br><br><br>
 ### 새로고침 기능
 
 <img src="readmeRes/새로고침 기능.gif" width="40%">
