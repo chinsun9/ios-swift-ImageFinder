@@ -33,6 +33,13 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     @IBOutlet var lblCurrentPage: UILabel!
     @IBOutlet var svSearchBar: UIStackView!
     
+    
+    @IBOutlet var svSelectModeBar: UIStackView!
+    
+    // 선택 모드에서 몇개 선택했는지 알려주는
+    @IBOutlet var lblSelectedCount: UILabel!
+    
+    
     var apiReulstDocument: NSArray = []
     var searchOption = SearchOption()
     var isEndPage: Bool = false
@@ -47,6 +54,28 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     // 검색기록용 변수
     let searchHistoryDropDown = DropDown()
     var searchHistory = [String]()
+    
+    
+    // 컬렉션뷰 셀렉트 모드용 변수
+    enum Mode {
+        case view
+        case select
+    }
+    var collectionViewMode: Mode = .view {
+        didSet {
+            switch collectionViewMode {
+            case .view:
+                collectionView.allowsMultipleSelection = false
+                break
+                
+            case .select:
+                collectionView.allowsMultipleSelection = true
+                break
+            }
+        }
+    }
+    var dictionarySelectedIndexPath: [IndexPath: Bool] = [:]
+    
     
     @IBOutlet var searchBar: UISearchBar!
     
@@ -65,7 +94,9 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         
         // 검색 결과 화면에 보이는 뷰 처음에 숨기기
         self.searchResultHelperView.constraints[0].constant = 0
-        
+        // 선택 모드바 처음에 숨기기
+        self.svSelectModeBar.constraints[0].constant = 0
+        self.svSelectModeBar.isHidden = true
         
         
         // 스와이프 제스처
@@ -100,6 +131,39 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         searchHistoryDropDown.anchorView = searchBar
         searchHistoryDropDown.dataSource = searchHistory
         searchHistoryDropDown.cellConfiguration = { (index, item) in return "\(item)" }
+        
+        // 컬렉션 뷰 롱 프레스 제스처 추가
+        let longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(longPressGR:)))
+        longPressGR.minimumPressDuration = 0.5
+        longPressGR.delaysTouchesBegan = true
+        longPressGR.delaysTouchesEnded = false
+        self.collectionView.addGestureRecognizer(longPressGR)
+        
+        // 검색창에 있는 값을 수정해보려고했는데 실패..
+//        print(searchBar.searchTextField)
+        
+    }
+    
+    @objc
+    func handleLongPress(longPressGR: UILongPressGestureRecognizer) {
+        if longPressGR.state != .ended {
+       
+            return
+        }
+        hideSelectModeBarView(false)
+        
+        let point = longPressGR.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: point)
+        
+        if let indexPath = indexPath {
+            _ = self.collectionView.cellForItem(at: indexPath)
+            print(indexPath.row)
+            collectionViewMode = collectionViewMode == .view ? .select : .view
+            
+            
+        } else {
+            print("Could not find index path")
+        }
     }
     
     @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
@@ -218,6 +282,17 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
             let height: CGFloat = isHide ? 0 : 40
             self.searchResultHelperView.constraints[0].constant = height
+            self.searchResultHelperView.layoutIfNeeded()
+        })
+    }
+    func hideSelectModeBarView(_ isHide: Bool) {
+        collectionViewMode = Mode.view
+        self.view.layoutIfNeeded() // force any pending operations to finish
+        
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.svSelectModeBar.isHidden = isHide
+            let height: CGFloat = isHide ? 0 : 40
+            self.svSelectModeBar.constraints[0].constant = height
             self.view.layoutIfNeeded()
         })
     }
@@ -229,6 +304,10 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         print(searchOption)
         self.searchOption = searchOption
         
+            
+    }
+    
+    func didSearchHistoryDelete(_ controller: SearchOptionViewController) {
         
         if let searchHistory = UserDefaults.standard.value(forKey: "History") {
             self.searchHistory = searchHistory as! [String]
@@ -275,6 +354,10 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
     
     func search() {
         //
+        
+        // 검색 키워드 앞뒤 공백 트림
+        searchOption.query = searchOption.query.trimmingCharacters(in: .whitespacesAndNewlines)
+//        searchBar.searchTextField.text = searchOption.query
         
         let apiRequest = APIResquest()
         
@@ -346,14 +429,14 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
                 self.collectionView.reloadData()
                 
                 // search result helper view extend
-                self.searchResultHelperView.layoutIfNeeded() // force any pending operations to finish
+                self.view.layoutIfNeeded() // force any pending operations to finish
                 
                 print(self.searchResultHelperView.constraints[0])
                 UIView.animate(withDuration: 0.4, animations: { () -> Void in
                     
                     self.searchResultHelperView.constraints[0].constant = 40
                     
-                    self.searchResultHelperView.layoutIfNeeded()
+                    self.view.layoutIfNeeded()
                 })
                 
                 if !self.isNoSearch {
@@ -395,6 +478,54 @@ class ViewController: UIViewController, UISearchBarDelegate, EditSearchOptionDel
         search()
     }
     
+    @IBAction func btnShareImageLink(_ sender: UIButton) {
+        if dictionarySelectedIndexPath.count == 0 {
+            showToast(message: "1개 이상 선택해주세요", font: .systemFont(ofSize: 12.0))
+            return
+        }
+        
+        print("공유하기")
+        
+        let shareData = dictionarySelectedIndexPath.map{
+            item in
+            return (apiReulstDocument[item.key[1]] as! NSDictionary).value(forKey: "image_url") as! String
+        }
+        print(shareData)
+        
+        let activityController = UIActivityViewController(activityItems: shareData, applicationActivities: nil)
+                   
+           self.present(activityController, animated: true, completion: nil)
+    }
+    
+    @IBAction func btnExitSelectMode(_ sender: UIButton) {
+        print("나가기")
+        hideSelectModeBarView(true)
+        collectionView.reloadData()
+    }
+    
+    @IBAction func btnSaveImages(_ sender: UIButton) {
+        if dictionarySelectedIndexPath.count == 0 {
+            showToast(message: "1개 이상 선택해주세요", font: .systemFont(ofSize: 12.0))
+            return
+        }
+        
+        dictionarySelectedIndexPath.forEach{
+            item in
+            
+            
+            if let url = URL(string: (apiReulstDocument[item.key[1]] as! NSDictionary).value(forKeyPath: "image_url") as! String),
+                          let data = try? Data(contentsOf: url),
+                          let image = UIImage(data: data) {
+                          print("image download")
+                          UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                          
+
+                      }
+
+            
+        }
+        showToast(message: String(dictionarySelectedIndexPath.count)+"개 이미지 저장 완료!", font: .systemFont(ofSize: 12.0))
+    }
     
 }
 
@@ -409,10 +540,40 @@ extension ViewController: UICollectionViewDelegate {
 //        
 //    }
     
+    
+    // 셀렉션뷰 클릭했을때 처리하는 부분
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionViewMode {
+        case .view:
+            collectionView.deselectItem(at: indexPath, animated: true)
+            performSegue(withIdentifier: "detailImage", sender: indexPath[1])
+            break
+        case .select:
+//            print("셀렉트 모드!")
+            dictionarySelectedIndexPath[indexPath] = true
+            let selectedItems = dictionarySelectedIndexPath.filter {
+                item in
+                return item.value
+            }
+            lblSelectedCount.text = String(selectedItems.count) + "개 선택됨"
+            break
+        }
         print(indexPath)
-        performSegue(withIdentifier: "detailImage", sender: indexPath[1])
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if collectionViewMode == .select {
+            dictionarySelectedIndexPath[indexPath] = false
+            let selectedItems = dictionarySelectedIndexPath.filter {
+                item in
+                return item.value
+            }
+            lblSelectedCount.text = String(selectedItems.count) + "개 선택됨"
+            dictionarySelectedIndexPath = selectedItems
+        }
+    }
+    
+    
 }
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

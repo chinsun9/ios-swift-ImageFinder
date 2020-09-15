@@ -12,7 +12,24 @@ class MyCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet var imageView: UIImageView!
     
+    @IBOutlet var highlightIndicator: UIView!
+    @IBOutlet var selectIndicator: UIImageView!
+    
     static let identifier = "MyCollectionViewCell"
+    
+    override var isHighlighted: Bool {
+        didSet {
+            highlightIndicator.isHidden = !isHighlighted
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            highlightIndicator.isHidden = !isSelected
+            selectIndicator.isHidden = !isSelected
+            
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

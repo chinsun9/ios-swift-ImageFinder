@@ -19,20 +19,42 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ip6-cA-zu8">
                         <rect key="frame" x="0.0" y="0.0" width="225" height="253"/>
                     </imageView>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-Oe-FNX">
+                        <rect key="frame" x="0.0" y="0.0" width="225" height="253"/>
+                        <color key="backgroundColor" white="1" alpha="0.61301369863013699" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qf5-Ci-Obk">
+                        <rect key="frame" x="187" y="215.5" width="30" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="BjF-hv-fXW"/>
+                            <constraint firstAttribute="width" constant="30" id="KPM-JU-9A7"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="u1J-Oe-FNX" secondAttribute="trailing" id="41u-SI-RON"/>
+                <constraint firstItem="u1J-Oe-FNX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BWB-Kn-sjV"/>
                 <constraint firstAttribute="trailing" secondItem="Ip6-cA-zu8" secondAttribute="trailing" id="OTl-zb-kGU"/>
+                <constraint firstItem="qf5-Ci-Obk" firstAttribute="trailing" secondItem="ZTg-uK-7eu" secondAttribute="trailing" constant="-8" id="OvV-lI-ptv"/>
+                <constraint firstAttribute="bottom" secondItem="u1J-Oe-FNX" secondAttribute="bottom" id="ZgF-aD-Ng5"/>
                 <constraint firstItem="Ip6-cA-zu8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="b1J-eL-eAe"/>
                 <constraint firstItem="Ip6-cA-zu8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="dJu-ml-X3S"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="qf5-Ci-Obk" secondAttribute="bottom" constant="8" id="ksU-T8-Idr"/>
+                <constraint firstItem="u1J-Oe-FNX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="mnJ-Oc-bJh"/>
                 <constraint firstAttribute="bottom" secondItem="Ip6-cA-zu8" secondAttribute="bottom" id="w2L-r2-phs"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="225" height="253"/>
             <connections>
+                <outlet property="highlightIndicator" destination="u1J-Oe-FNX" id="qsR-sw-PIG"/>
                 <outlet property="imageView" destination="Ip6-cA-zu8" id="Fhx-Jz-nAl"/>
+                <outlet property="selectIndicator" destination="qf5-Ci-Obk" id="EvX-IS-ddj"/>
             </connections>
             <point key="canvasLocation" x="264.49275362318843" y="51.897321428571423"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
+    </resources>
 </document>

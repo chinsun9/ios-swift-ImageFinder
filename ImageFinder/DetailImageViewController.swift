@@ -85,7 +85,7 @@ class DetailImageViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func hideImage(_ isHide: Bool) {
-        self.imageView.layoutIfNeeded() // force any pending operations to finish
+        self.view.layoutIfNeeded() // force any pending operations to finish
 
         UIView.animate(withDuration: 0.5, animations: { () -> Void in
             let height: CGFloat = isHide ? 0 : 400
